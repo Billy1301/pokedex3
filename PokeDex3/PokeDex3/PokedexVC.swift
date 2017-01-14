@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 
 class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collection: UICollectionView!
     
     var pokemon = [Pokemon]()
+    var musicPlayer: AVAudioPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +23,25 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         collection.dataSource = self
         
         parsePokemonCSV()
+        initAudio()
     }
+    
+    func initAudio() {
+        
+        let path = Bundle.main.path(forResource: "music", ofType: "mp3")!
+        
+        do {
+            
+            musicPlayer = try AVAudioPlayer(contentsOf: URL(string: path)!)
+            musicPlayer.prepareToPlay()
+            musicPlayer.numberOfLoops = -1
+            musicPlayer.play()
+            
+        } catch let err as NSError {
+            print(err.debugDescription)
+        }
+    }
+    
 
     func parsePokemonCSV(){
         
@@ -49,8 +69,8 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokeCell", for: indexPath) as? PokeCell {
             
-            let pokemon = Pokemon(name: "Pokemon", pokedexId: indexPath.row)
-            cell.configureCell(pokemon)
+            let poke = pokemon[indexPath.row]
+            cell.configureCell(poke)
             
             return cell
         } else {
@@ -64,7 +84,7 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 30
+        return pokemon.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -74,6 +94,18 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize(width: 105, height: 105)
+    }
+    
+    
+    @IBAction func musicBtn(_ sender: UIButton) {
+        if musicPlayer.isPlaying {
+            musicPlayer.pause()
+            sender.alpha = 0.2
+            
+        } else {
+            musicPlayer.play()
+            sender.alpha = 1.0
+        }
     }
 
 }
