@@ -32,6 +32,8 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         initAudio()
     }
     
+    
+    // start audio
     func initAudio() {
         
         let path = Bundle.main.path(forResource: "music", ofType: "mp3")!
@@ -136,6 +138,8 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
     }
 
+    // search function
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         view.endEditing(true)
     }
@@ -149,6 +153,7 @@ class PokedexVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             view.endEditing(true)
             
         } else {
+            
             inSearchMode = true
             
             let lower = searchBar.text!.lowercased()
