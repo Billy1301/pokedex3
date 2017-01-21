@@ -1,5 +1,4 @@
-# pokedex3
-Pokedex 
+# Pokedex
 
 <html>
 <body>
@@ -11,7 +10,7 @@ An iOS app to get information about Pokémons and their abilities.
 <p>Features:
 <br>Search for specific Pokémon
 <br>Click on pokemon to view descriptions
-<br>Get evolution details
+
 </p>
 
 
