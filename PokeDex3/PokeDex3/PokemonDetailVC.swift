@@ -30,10 +30,27 @@ class PokemonDetailVC: UIViewController {
         super.viewDidLoad()
 
         nameLbl.text = pokemon.name.capitalized
+        
+        let img = UIImage(named: "\(pokemon.pokedexId)")
+        mainImg.image = img
+        currentEvoImg.image = img
+        
+        pokemon.downloadPokemonDetail {
+            self.updateUI()
+        }
     }
     
     @IBAction func backBtnPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
 
+    
+    func updateUI() {
+        baseAtkLbl.text = pokemon.attack
+        defenseLbl.text = pokemon.defense
+        typeLbl.text = pokemon.type
+        heightLbl.text = pokemon.height
+        weightLbl.text = pokemon.weight
+        pokedexIDLbl.text = "\(pokemon.pokedexId)"
+    }
 }
