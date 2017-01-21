@@ -36,7 +36,6 @@ open class CSV {
         try self.init(content: csvString,delimiter:comma, encoding:String.Encoding.utf8.rawValue)
     }
     
-    
     func parseHeaders(fromLines lines: [String]) -> [String] {
         return lines[0].components(separatedBy: self.delimiter)
     }
